@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: black;
+  margin-top: 100px;
+}
+.container {
+  width: 700px;
+  margin: 0 auto;
+  background-color: rgb(96, 223, 153);
+  padding-top: 4px;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+#calculator {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 10px 0px 10px;
+}
+
+.result {
+  display: flex;
+  background-color: rgb(122, 226, 148);
+  border-radius: 5px;
+  margin: 5px 10px;
+}
+.result > h2 {
+  margin: 4px;
+  padding: 5px;
+}
+.result > p {
+  width: 100%;
+  background-color: rgb(250, 249, 249);
+  border-radius: 0px 5px 5px 0;
+  text-align: right;
+  padding: 5px;
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.input-form {
+  display: flex;
+  background-color: rgb(122, 226, 148);
+  border-radius: 5px;
+  margin: 5px 10px;
+}
+.input-form > p:first-of-type {
+  padding: 2px 5px;
+  margin: 0px 10px;
+  border-radius: 5px;
+  font-weight: 700;
+  text-wrap: nowrap;
+  font-size: 1.4rem;
+}
+
+#current-input {
+  width: 100%;
+  background-color: rgb(250, 249, 249);
+  border-radius: 0px 5px 5px 0;
+  text-align: right;
+  padding: 2px 5px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: gray;
+}
+
+#calculator > div {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 23%;
+  background-color: bisque;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 4rem;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+}
+#calculator > div:active {
+  background-color: azure;
+  box-shadow: 0px 0px 5px #000;
+}
+
+#calculator > div:hover {
+  background-color: rgb(219, 188, 150);
+}
+
+#clear {
+  background-color: chocolate;
+  border-radius: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  letter-spacing: 2px;
+  margin: 5px 10px;
+  cursor: pointer;
+}
+#clear:hover {
+  background-color: rgb(43, 71, 71);
+  color: aliceblue;
+}
+
+#clear:active {
+  box-shadow: 0px 0px 5px #000;
+}
