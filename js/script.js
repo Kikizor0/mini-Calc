@@ -192,21 +192,10 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keydown", (e) => {
   numberClick(e.key);
 });
+let keyArray = [".", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 function numberClick(e) {
-  if (
-    e === "." ||
-    e === "1" ||
-    e === "2" ||
-    e === "3" ||
-    e === "4" ||
-    e === "5" ||
-    e === "6" ||
-    e === "7" ||
-    e === "8" ||
-    e === "9" ||
-    e === "0"
-  ) {
-    document.getElementById(`${e}`).click();
+  for (let key of keyArray) {
+    if (e === key) document.getElementById(`${e}`).click();
   }
 }
 
