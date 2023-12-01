@@ -15,6 +15,7 @@ let allInputs = [];
 let tempNumber = [];
 let currentNumber = 0;
 let currentOperation = 0;
+let bugFix = false;
 
 function setNumber() {
   if (tempNumber.length > 0) {
@@ -38,6 +39,19 @@ function showInputs() {
 
 // operation functions
 function addition() {
+  if (!bugFix) {
+    switch (currentOperation) {
+      case 2:
+        subtract();
+        break;
+      case 3:
+        divide();
+        break;
+      case 4:
+        multiply();
+        break;
+    }
+  }
   currentOperation = 1;
   totalResult = isNaN(totalResult) ? 0 : totalResult;
   currentNumber = isNaN(currentNumber) ? 0 : currentNumber;
@@ -46,6 +60,19 @@ function addition() {
   resultEl.textContent = totalResult;
 }
 function subtract() {
+  if (!bugFix) {
+    switch (currentOperation) {
+      case 1:
+        addition();
+        break;
+      case 3:
+        divide();
+        break;
+      case 4:
+        multiply();
+        break;
+    }
+  }
   currentOperation = 2;
   totalResult = isNaN(totalResult) ? currentNumber * 2 : totalResult;
   currentNumber = isNaN(currentNumber) ? 0 : currentNumber;
@@ -55,6 +82,19 @@ function subtract() {
 }
 
 function multiply() {
+  if (!bugFix) {
+    switch (currentOperation) {
+      case 1:
+        addition();
+        break;
+      case 2:
+        subtract();
+        break;
+      case 3:
+        divide();
+        break;
+    }
+  }
   currentOperation = 4;
   totalResult = isNaN(totalResult) ? 1 : totalResult;
   currentNumber = isNaN(currentNumber) ? 1 : currentNumber;
@@ -63,6 +103,19 @@ function multiply() {
   resultEl.textContent = totalResult;
 }
 function divide() {
+  if (!bugFix) {
+    switch (currentOperation) {
+      case 1:
+        addition();
+        break;
+      case 2:
+        subtract();
+        break;
+      case 4:
+        multiply();
+        break;
+    }
+  }
   currentOperation = 3;
   totalResult = isNaN(totalResult) ? currentNumber ** 2 : totalResult;
   currentNumber = isNaN(currentNumber) ? 1 : currentNumber;
@@ -70,6 +123,32 @@ function divide() {
   currentNumber = undefined;
   resultEl.textContent = totalResult;
 }
+
+function reset() {
+  totalResult = undefined;
+  allInputs = [];
+  tempNumber = [];
+  currentNumber = 0;
+  currentOperation = 0;
+  console.log(`cleared`);
+  resultEl.textContent = 0;
+  inputtEl.textContent = 0;
+}
+
+function equallNow() {
+  switch (currentOperation) {
+    case 1:
+      return addition();
+    case 2:
+      return subtract();
+    case 3:
+      return divide();
+    case 4:
+      return multiply();
+  }
+}
+
+// ------------------
 
 for (let btn of numberBtns) {
   btn.addEventListener("click", () => {
@@ -102,30 +181,12 @@ divideBtn.addEventListener("click", () => {
   divide();
 });
 resetBtn.addEventListener("click", () => {
-  totalResult = undefined;
-  allInputs = [];
-  tempNumber = [];
-  currentNumber = 0;
-  currentOperation = 0;
-  console.log(`cleared`);
-  resultEl.textContent = 0;
-  inputtEl.textContent = 0;
+  reset();
 });
 equall.addEventListener("click", () => {
-  switch (currentOperation) {
-    case 1:
-      addition();
-      break;
-    case 2:
-      subtract();
-      break;
-    case 3:
-      divide();
-      break;
-    case 4:
-      multiply();
-      break;
-  }
+  bugFix = true;
+  equallNow();
+  bugFix = false;
 });
 
 // keyEvents
@@ -155,10 +216,10 @@ document.addEventListener("keydown", (e) => {
   }
 });
 document.addEventListener("keydown", (e) => {
-  numbertnnCheck(e.key);
+  numberClick(e.key);
 });
 
-function numbertnnCheck(e) {
+function numberClick(e) {
   if (
     e === "." ||
     e === "1" ||
@@ -175,3 +236,16 @@ function numbertnnCheck(e) {
     document.getElementById(`${e}`).click();
   }
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Backspace") {
+    allInputs.pop();
+    tempNumber.pop();
+    showInputs();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Delete") {
+    reset();
+  }
+});
