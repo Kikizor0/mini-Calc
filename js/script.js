@@ -127,3 +127,51 @@ equall.addEventListener("click", () => {
       break;
   }
 });
+
+// keyEvents
+document.addEventListener("keydown", (e) => {
+  if (e.key === "+") {
+    document.getElementById("addition").click();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "-") {
+    document.getElementById("subtract").click();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/") {
+    document.getElementById("divide").click();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "*") {
+    document.getElementById("multiply").click();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "=" || e.key === "Enter") {
+    document.getElementById("equall").click();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  numbertnnCheck(e.key);
+});
+
+function numbertnnCheck(e) {
+  if (
+    e === "." ||
+    e === "1" ||
+    e === "2" ||
+    e === "3" ||
+    e === "4" ||
+    e === "5" ||
+    e === "6" ||
+    e === "7" ||
+    e === "8" ||
+    e === "9" ||
+    e === "0"
+  ) {
+    document.getElementById(`${e}`).click();
+  }
+}
