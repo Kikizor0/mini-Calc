@@ -93,7 +93,7 @@ function bugFixMethod(e) {
       return subtract();
     case currentOperation === 3 && e !== 3:
       return divide();
-    case currentOperation === 4 && e !== 3:
+    case currentOperation === 4 && e !== 4:
       return multiply();
   }
 }
