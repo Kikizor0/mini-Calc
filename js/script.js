@@ -42,7 +42,7 @@ function subtract() {
 
 function multiply() {
   if (!bugFix) {
-    bugFixMethod(3);
+    bugFixMethod(4);
   }
   currentOperation = 4;
   totalResult = isNaN(totalResult) ? 1 : totalResult;
@@ -53,7 +53,7 @@ function multiply() {
 
 function divide() {
   if (!bugFix) {
-    bugFixMethod(4);
+    bugFixMethod(3);
   }
   currentOperation = 3;
   totalResult = isNaN(totalResult) ? currentNumber ** 2 : totalResult;
