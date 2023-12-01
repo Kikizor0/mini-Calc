@@ -17,111 +17,49 @@ let currentNumber = 0;
 let currentOperation = 0;
 let bugFix = false;
 
-function setNumber() {
-  if (tempNumber.length > 0) {
-    let numberAfterConcat = "";
-    for (let numb of tempNumber) {
-      numberAfterConcat += numb;
-    }
-    currentNumber = +numberAfterConcat;
-    tempNumber = [];
-  }
-}
-
-// Change Input
-function showInputs() {
-  let input = "";
-  for (let i of allInputs) {
-    if (i !== "=") input += i;
-  }
-  inputtEl.textContent = input;
-}
-
 // operation functions
 function addition() {
   if (!bugFix) {
-    switch (currentOperation) {
-      case 2:
-        subtract();
-        break;
-      case 3:
-        divide();
-        break;
-      case 4:
-        multiply();
-        break;
-    }
+    bugFixMethod(1);
   }
   currentOperation = 1;
   totalResult = isNaN(totalResult) ? 0 : totalResult;
   currentNumber = isNaN(currentNumber) ? 0 : currentNumber;
   totalResult += currentNumber;
-  currentNumber = undefined;
-  resultEl.textContent = totalResult;
+  clearAndset();
 }
+
 function subtract() {
   if (!bugFix) {
-    switch (currentOperation) {
-      case 1:
-        addition();
-        break;
-      case 3:
-        divide();
-        break;
-      case 4:
-        multiply();
-        break;
-    }
+    bugFixMethod(2);
   }
   currentOperation = 2;
   totalResult = isNaN(totalResult) ? currentNumber * 2 : totalResult;
   currentNumber = isNaN(currentNumber) ? 0 : currentNumber;
   totalResult -= currentNumber;
-  currentNumber = undefined;
-  resultEl.textContent = totalResult;
+  clearAndset();
 }
 
 function multiply() {
   if (!bugFix) {
-    switch (currentOperation) {
-      case 1:
-        addition();
-        break;
-      case 2:
-        subtract();
-        break;
-      case 3:
-        divide();
-        break;
-    }
+    bugFixMethod(3);
   }
   currentOperation = 4;
   totalResult = isNaN(totalResult) ? 1 : totalResult;
   currentNumber = isNaN(currentNumber) ? 1 : currentNumber;
   totalResult *= currentNumber;
-  currentNumber = undefined;
-  resultEl.textContent = totalResult;
+  clearAndset();
 }
+
 function divide() {
   if (!bugFix) {
-    switch (currentOperation) {
-      case 1:
-        addition();
-        break;
-      case 2:
-        subtract();
-        break;
-      case 4:
-        multiply();
-        break;
-    }
+    bugFixMethod(4);
   }
   currentOperation = 3;
   totalResult = isNaN(totalResult) ? currentNumber ** 2 : totalResult;
   currentNumber = isNaN(currentNumber) ? 1 : currentNumber;
   totalResult /= currentNumber;
-  currentNumber = undefined;
-  resultEl.textContent = totalResult;
+  clearAndset();
 }
 
 function reset() {
@@ -130,7 +68,6 @@ function reset() {
   tempNumber = [];
   currentNumber = 0;
   currentOperation = 0;
-  console.log(`cleared`);
   resultEl.textContent = 0;
   inputtEl.textContent = 0;
 }
@@ -147,24 +84,60 @@ function equallNow() {
       return multiply();
   }
 }
+// to solve callstack max
+function bugFixMethod(e) {
+  switch (true) {
+    case currentOperation === 1 && e !== 1:
+      return addition();
+    case currentOperation === 2 && e !== 2:
+      return subtract();
+    case currentOperation === 3 && e !== 3:
+      return divide();
+    case currentOperation === 4 && e !== 3:
+      return multiply();
+  }
+}
 
-// ------------------
+function clearAndset() {
+  currentNumber = undefined;
+  resultEl.textContent = totalResult;
+}
 
+// Push Pressed Button to array to set HTML input
 for (let btn of numberBtns) {
   btn.addEventListener("click", () => {
     tempNumber.push(btn.textContent);
     allInputs.push(btn.textContent);
-
     showInputs();
   });
 }
-
 for (let btn of symbolBtns) {
   btn.addEventListener("click", () => {
     setNumber();
     allInputs.push(btn.textContent);
     showInputs();
   });
+}
+
+// Building Number Take all user input before and operation concat and convert to number from string
+function setNumber() {
+  if (tempNumber.length > 0) {
+    let numberAfterConcat = "";
+    for (let numb of tempNumber) {
+      numberAfterConcat += numb;
+    }
+    currentNumber = +numberAfterConcat;
+    tempNumber = [];
+  }
+}
+
+// Change Input on HTML
+function showInputs() {
+  let input = "";
+  for (let i of allInputs) {
+    if (i !== "=") input += i;
+  }
+  inputtEl.textContent = input;
 }
 
 // operators buttons
@@ -192,33 +165,33 @@ equall.addEventListener("click", () => {
 // keyEvents
 document.addEventListener("keydown", (e) => {
   if (e.key === "+") {
-    document.getElementById("addition").click();
+    additonBtn.click();
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "-") {
-    document.getElementById("subtract").click();
+    subtractBtn.click();
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "/") {
-    document.getElementById("divide").click();
+    divideBtn.click();
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "*") {
-    document.getElementById("multiply").click();
+    multiplyBtn.click();
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "=" || e.key === "Enter") {
-    document.getElementById("equall").click();
+    equallBtn.click();
   }
 });
+
 document.addEventListener("keydown", (e) => {
   numberClick(e.key);
 });
-
 function numberClick(e) {
   if (
     e === "." ||
@@ -239,9 +212,11 @@ function numberClick(e) {
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Backspace") {
-    allInputs.pop();
-    tempNumber.pop();
-    showInputs();
+    if (tempNumber.length > 0) {
+      allInputs.pop();
+      tempNumber.pop();
+      showInputs();
+    }
   }
 });
 document.addEventListener("keydown", (e) => {
